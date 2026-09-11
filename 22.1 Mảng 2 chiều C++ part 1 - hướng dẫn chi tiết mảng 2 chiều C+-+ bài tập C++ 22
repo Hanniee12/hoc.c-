@@ -1,0 +1,43 @@
+#include<iostream>
+#include <random>
+using namespace std;
+int main() {
+	// 1.1 Khởi tạo mảng 2 chiều
+	int mang1[3][4];
+	string mang2[3][3];
+	double mang3[5][4];
+
+	// 1.2 khởi tạo và gắn giá trị
+	const int row = 3;
+	const int col = 4;
+	string o = " ";
+	int mang4[row][col] = { {1,2,3,4}, {5,6,7,8}, {9,10,11,12}};
+
+	// 2. xuất mảng
+	for (int i = 0; i < row; i++) {
+		for (int n = 0; n < col; n++) {
+			cout << mang4[i][n] << " ";
+		}
+		cout << endl;
+	}
+
+	// 3.2 Tạo mảng ngẫu nhiên
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution <> dis(0, 99);
+	// duyệt từng phần tử và gán phần tử ngẫu nhiên
+	int mang5[row][col];
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			mang5[i][j] = dis(gen);
+		}
+	}
+	// xuất mảng
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			cout << mang5[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+}
