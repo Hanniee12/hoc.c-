@@ -1,0 +1,154 @@
+#include <iostream>
+#include <random>
+using namespace std;
+int main() {
+	// Khai báo biến thông thường
+	int nhietdo = 78;
+	// xem địa chỉ ô nhớ trên ram
+	cout << "dia chi o nho cua bien nhietdo: " << &nhietdo << endl;
+	 
+	// khai báo con trỏ 
+	int* a;
+	a = new int; // cấp pháp bộ nhớ
+	// => xuất trực tiếp giá trị con trỏ a. trả về địa chỉ ô nhớ mà a chiếm
+	cout << " dia chi a tro toi: " << a << endl;
+	//gán giá trị cho biến con trỏ
+	*a = 25;
+	cout << "gia tri nam tren o nho  cua con tro a la: " << *a << endl;
+
+	// khai bao controT
+	int* controT;
+	// trỏ biến con trỏ vào ô nhớ  của biến nhietdo
+	controT = &nhietdo;
+	// in ra địa chỉ  ô nhớ 
+	cout << "dia chi ma controT chi toi:  " << controT << endl;
+	cout << "gia tri nam tren o nho cua controT la: " << *controT << endl;
+
+	// thay đổi giá trị của controT
+	*controT = 99;
+	cout << " gia tri controT sau khi thay doi la: " << *controT << endl;
+	cout << " gia tri cua bien nhiet do la: " << nhietdo << endl;
+
+
+	// Phần 2:
+	// Khai báo biến thông thường
+	int nguyenA;
+	float thucB;
+
+	//khai báo biến con trỏ
+	int* controNguyen;
+	float* controThuc;
+
+	//gán con trỏ hợp lệ
+	controNguyen = &nguyenA;
+	controThuc = &thucB;
+	
+
+	//Khai báo không hợp lệ
+	/*
+	controNguyen = &thucB;
+	controThuc = &nguyenA;
+	*/
+
+	//khai báo con trỏ void
+	void* gicungduoc;
+
+	//gán với các kiểu giữ liệu khác nhau
+	gicungduoc = &nguyenA;
+	//gicungduoc = &thucB;
+
+	//gán giá trị cho con trỏ kiểu void
+	*(int*)gicungduoc = 45;
+	// xuất địa chỉ ô nhớ
+	cout << &nguyenA << endl;
+	cout << gicungduoc << endl;
+	
+	//xuất giá trị của nguyenA, và giá trị nằm trên ô nhớ con trỏ gicungduoc trỏ tới
+	cout << nguyenA << endl;
+	cout << *(int*)gicungduoc << endl;
+	// Khai báo 1 con trỏ
+	int* conTroxyz;
+	//cout << "bo nho con tro xyz: " << conTroxyz;
+
+
+	// phần 3:
+	//khai báo mảng 
+	int mang[] = { 1,2,3,4,5,6,7,8 };
+	//khai báo con trỏ
+	int* contro;
+	//gán con trỏ vào mảng (không cần &)
+	contro = mang;
+
+	//duyệt mảng nhưng qua con trỏ
+	for (int i = 0; i < size(mang);i++) {
+		// lấy giá trị  nằm trên ô nhớ  mà con contro thứ i quản lý 
+		cout << *(contro + i) << " ";
+	}
+	// thay đổi giá trị của mảng contro
+	*(contro + 2) = 10;
+	//xuất lại mảng
+	cout << "\nmang sau doi la: ";
+	for (int i = 0; i < size(mang);i++) {
+		cout << mang[i] << " ";
+	}
+	cout << endl;
+
+	// khai báo mảng con trỏ
+	int* mangcontro[5];
+	//duyệt mảng để cấp phát bộ nhớ 
+	for (int i = 0; i < size(mangcontro); i++) {
+		mangcontro[i] = new int;
+
+	}
+	// xuất các giá trị của mảng ( địa chỉ  các bộ nhớ )
+	for (int i = 0; i < size(mangcontro); i++) {
+		cout << mangcontro[i] << endl;
+	}
+
+	// phần 4:
+	const int row = 3;
+	const int col = 4;
+
+	int** caphai = new int*[row]; //3 dòng
+	for (int i = 0;i < row;i++) {
+		//di chuyển con trỏ bên trong để cấp phát bộ nhớ 
+		*(caphai + i) = new int[col];// 4 phần tử  
+
+	}
+
+	//xuất địa chỉ các ô nhớ của con tro caphai
+	for (int i = 0; i < row;i++) {
+		for (int j = 0; j < col; j++) {
+			//khi sử dụng dấu ngoặc vuông 
+			//sẽ truy xuất đến giá trị ô nhớ tại vị trí i,j
+			// vì thế cần sử dụng & để xuất ra địa chỉ ô nhớ tại i,j
+			cout << &caphai[i][j] << " ";
+
+		}
+		cout << endl;
+	}
+
+	// gán giá trị cho các phần tử của con trỏ mảng 
+	for (int i = 0; i < row;i++) {
+		for (int j = 0; j < col; j++) {
+			caphai[i][j] = i+j;
+
+		}
+	
+	}
+	// duyệt mảng và xuất các giá trị trên ma trận 
+	for (int i = 0; i < row;i++) {
+		for (int j = 0; j < col; j++) {
+			cout << caphai[i][j] << " ";
+
+		}
+		cout << endl;
+
+	}
+
+	// hủy con trỏ
+	for (int i = 0; i < row; i ++ ) {
+		delete* (caphai + i);
+	}
+	delete* caphai;
+}
